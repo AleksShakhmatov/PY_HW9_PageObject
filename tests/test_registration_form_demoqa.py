@@ -1,30 +1,12 @@
-from pages.registration_form_demoqa_page import RegistrationForm
+from pages.page_form_demoqa import RegistrationForm
+from test_data.user import User
 
 
-def test_registration_form_demoqa():
-    registration_form = RegistrationForm()
-    registration_form.open()
-    registration_form.type_first_name('Coluchy')
-    registration_form.type_last_name('Aleksandr')
-    registration_form.type_email('AC@ya.com')
-    registration_form.click_gender()
-    registration_form.type_phone('4455667788')
-    registration_form.type_birthday()
-    registration_form.type_subjects('Computer Science')
-    registration_form.click_hobbies()
-    registration_form.upload_photo('8.png')
-    registration_form.type_address('India')
-    registration_form.type_state('Rajasthan')
-    registration_form.type_city('Jaiselmer')
-    registration_form.press_submit()
-    registration_form.should_text('Thanks for submitting the form')
-    registration_form.should_exact_text('Coluchy Aleksandr',
-                                        'AC@ya.com',
-                                        'Male',
-                                        '4455667788',
-                                        '08 July,1986',
-                                        'Computer Science',
-                                        'Reading',
-                                        '8.png',
-                                        'India',
-                                        'Rajasthan Jaiselmer')
+def test_registration_form_complete():
+    page_form_demoqa = RegistrationForm()
+    user = User(first_name='Coluchy', last_name='Aleksandr', email='AC@ya.com', gender='Male', user_number='4455667788',
+                birthday='08 July,1986', subject='Computer Science', hobbies='Reading', picture='8.png',
+                address='India', state='Rajasthan', city='Jaiselmer')
+    page_form_demoqa.open()
+    page_form_demoqa.register(user)
+    page_form_demoqa.should_exact_text(user)

@@ -11,3 +11,4 @@ def test_registration_form_complete():
     page_form_demoqa.register(user)
     page_form_demoqa.should_exact_text(user)
 
+

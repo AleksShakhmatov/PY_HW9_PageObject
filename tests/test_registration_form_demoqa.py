@@ -1,4 +1,4 @@
-from pages.page_form_demoqa import RegistrationForm
+from pages.registration_form_demoqa_page import RegistrationForm
 from test_data.user import User
 
 

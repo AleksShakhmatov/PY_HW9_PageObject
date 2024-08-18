@@ -1,4 +1,4 @@
-from importlib import resources
+from pathlib import Path
 
 from selene import browser, have
 
@@ -19,9 +19,9 @@ class RegistrationForm:
     def type_birthday(self):
         browser.element('#dateOfBirthInput').click()
         browser.element('.react-datepicker__month-select').click()
-        browser.element('.react-datepicker__month-select').element('[value = "06"]').click()
-        browser.element('.react-datepicker__year-select').element('[value = "1986"]').click()
-        browser.element('.react-datepicker__day--08').click()
+        browser.element('.react-datepicker__month-select').click().element('[value="6"]').click()
+        browser.element('.react-datepicker__year-select').click().element('[value="1986"]').click()
+        browser.element('.react-datepicker__day--008').click()
 
     def click_gender(self):
         browser.element('[for="gender-radio-1"]').click()
@@ -33,11 +33,10 @@ class RegistrationForm:
         browser.element('#subjectsInput').type(subjects).press_enter()
 
     def click_hobbies(self):
-        browser.element('[for=hobbies-checkbox-1]').click()
-
+        browser.element('[for=hobbies-checkbox-2]').click()
 
     def upload_photo(self, photo):
-        browser.element('#uploadPicture').set_value(resources.resources_path(photo))
+        browser.element('#uploadPicture').send_keys(str(Path(__file__).parent.parent.joinpath(f'resources/{photo}')))
 
     def type_address(self, address):
         browser.element('#currentAddress').type(address)
@@ -54,7 +53,8 @@ class RegistrationForm:
     def should_text(self, text):
         browser.element("#example-modal-sizes-title-lg").should(have.text(text))
 
-    def should_exact_text(self, first_name, email, gender, phone, birthday, hobbies, hobbies2, photo, address, city):
-        browser.element('.table').all('td').even.should(have.exact_texts(first_name, email, gender, phone,
-                                                                         birthday, hobbies, hobbies2, photo, address,
-                                                                         city))
+    def should_exact_text(self, first_name, email, gender, phone, birthday, subjects, hobbies, photo,
+                          address, city):
+        browser.element('.table').all('td').even.should(
+            have.exact_texts(first_name, email, gender, phone, birthday, subjects, hobbies, photo,
+                             address, city))
